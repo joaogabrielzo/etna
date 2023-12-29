@@ -1,0 +1,1 @@
+set(TINYOBJ_PATH, ../tinyobjloader)

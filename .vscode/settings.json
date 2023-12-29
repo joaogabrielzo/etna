@@ -1,0 +1,10 @@
+{
+    "C_Cpp.errorSquiggles": "enabled",
+    "files.associations": {
+        "*.shader": "shaderlab",
+        "*.cginc": "shaderlab",
+        "*.hlsl": "hlsl",
+        "vector": "cpp",
+        "__config": "cpp"
+    }
+}
