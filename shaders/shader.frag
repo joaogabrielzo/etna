@@ -1,7 +1,9 @@
 #version 450
 
-layout (location = 0) out vec4 outColor;
+layout (location = 0) in vec3 colour;
+
+layout (location = 0) out vec4 outColour;
 
 void main() {
-    outColor = vec4(1.0, 0.0, 0.0, 1.0);
+    outColour = vec4(colour, 1.0);
 }

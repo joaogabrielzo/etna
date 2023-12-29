@@ -15,6 +15,7 @@ namespace engine
         struct Vertex
         {
             glm::vec2 position;
+            glm::vec3 colour;
 
             static std::vector<VkVertexInputBindingDescription> getBindingDescriptions();
             static std::vector<VkVertexInputAttributeDescription> getAttributeDescriptions();
