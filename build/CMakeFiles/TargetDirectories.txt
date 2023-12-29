@@ -1,4 +1,0 @@
-/Users/zo/dev/C++/engine/build/CMakeFiles/Engine.dir
-/Users/zo/dev/C++/engine/build/CMakeFiles/Shaders.dir
-/Users/zo/dev/C++/engine/build/CMakeFiles/edit_cache.dir
-/Users/zo/dev/C++/engine/build/CMakeFiles/rebuild_cache.dir
