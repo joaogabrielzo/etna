@@ -32,10 +32,12 @@ namespace engine
         void createPipeline();
         void createCommandBuffers();
         void drawFrame();
+        void recreateSwapChain();
+        void recordCommandBuffer(int imageIndex);
 
         Window window{WIDTH, HEIGHT, "Engine"};
         Device device{window};
-        SwapChain swapchain{device, window.getExtent()};
+        std::unique_ptr<SwapChain> swapchain;
         std::unique_ptr<Pipeline> pipeline;
         VkPipelineLayout pipelineLayout;
         std::vector<VkCommandBuffer> commandBuffers;
