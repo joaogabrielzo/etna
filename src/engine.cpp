@@ -1,6 +1,7 @@
 #include "engine.hpp"
 
 #include <stdexcept>
+#include <memory>
 
 namespace engine
 {
@@ -55,7 +56,8 @@ namespace engine
 
     void Engine::createPipeline()
     {
-        auto pipelineConfig = Pipeline::defaultPipelineConfigInfo(swapchain->width(), swapchain->height());
+        PipelineConfigInfo pipelineConfig{};
+        Pipeline::defaultPipelineConfigInfo(pipelineConfig);
         pipelineConfig.renderPass = swapchain->getRenderPass();
         pipelineConfig.pipelineLayout = pipelineLayout;
 
@@ -78,6 +80,12 @@ namespace engine
         }
     }
 
+    void Engine::freeCommandBuffers()
+    {
+        vkFreeCommandBuffers(device.device(), device.getCommandPool(), static_cast<uint32_t>(commandBuffers.size()), commandBuffers.data());
+        commandBuffers.clear();
+    }
+
     void Engine::drawFrame()
     {
         uint32_t imageIndex;
@@ -95,7 +103,8 @@ namespace engine
 
         recordCommandBuffer(imageIndex);
         result = swapchain->submitCommandBuffers(&commandBuffers[imageIndex], &imageIndex);
-        if (result == VK_ERROR_OUT_OF_DATE_KHR || result == VK_SUBOPTIMAL_KHR || window.wasWindowResized()) {
+        if (result == VK_ERROR_OUT_OF_DATE_KHR || result == VK_SUBOPTIMAL_KHR || window.wasWindowResized())
+        {
             window.resetWindowResizedFlag();
             recreateSwapChain();
         }
@@ -119,7 +128,21 @@ namespace engine
         }
 
         vkDeviceWaitIdle(device.device());
-        swapchain = std::make_unique<SwapChain>(device, extent);
+
+        if (swapchain == nullptr)
+        {
+            swapchain = std::make_unique<SwapChain>(device, extent);
+        }
+        else
+        {
+            swapchain = std::make_unique<SwapChain>(device, extent, std::move(swapchain));
+            if (swapchain->imageCount() != commandBuffers.size())
+            {
+                freeCommandBuffers();
+                createCommandBuffers();
+            }
+        }
+
         createPipeline();
     }
 
@@ -151,6 +174,17 @@ namespace engine
             renderPassInfo.pClearValues = clearValues.data();
 
             vkCmdBeginRenderPass(commandBuffers[imageIndex], &renderPassInfo, VK_SUBPASS_CONTENTS_INLINE);
+
+            VkViewport viewport{};
+            viewport.x = 0.0f;
+            viewport.y = 0.0f;
+            viewport.width = static_cast<float>(swapchain->getSwapChainExtent().width);
+            viewport.height = static_cast<float>(swapchain->getSwapChainExtent().height);
+            viewport.minDepth = 0.0f;
+            viewport.maxDepth = 1.0f;
+            VkRect2D scissor{{0, 0}, swapchain->getSwapChainExtent()};
+            vkCmdSetViewport(commandBuffers[imageIndex], 0, 1, &viewport);
+            vkCmdSetScissor(commandBuffers[imageIndex], 0, 1, &scissor);
 
             pipeline->bind(commandBuffers[imageIndex]);
             model->bind(commandBuffers[imageIndex]);
