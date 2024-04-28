@@ -1,4 +1,4 @@
-#include "engine.hpp"
+#include "etna.hpp"
 
 #include <cstdlib>
 #include <iostream>
@@ -6,11 +6,11 @@
 
 int main()
 {
-    engine::Engine engine{};
+    etna::Etna etna{};
 
     try
     {
-        engine.run();
+        etna.run();
     }
     catch (const std::exception &e)
     {

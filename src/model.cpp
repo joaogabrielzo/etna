@@ -2,7 +2,7 @@
 
 #include <cassert>
 
-namespace engine
+namespace etna
 {
     Model::Model(Device &device, std::vector<Vertex> &vertices) : device{device}
     {

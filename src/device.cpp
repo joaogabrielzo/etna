@@ -6,7 +6,7 @@
 #include <set>
 #include <unordered_set>
 
-namespace engine
+namespace etna
 {
 
   // local callback functions

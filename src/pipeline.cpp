@@ -5,7 +5,7 @@
 #include <fstream>
 #include <stdexcept>
 
-namespace engine
+namespace etna
 {
     Pipeline::Pipeline(
         Device &device,

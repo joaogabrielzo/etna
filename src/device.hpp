@@ -6,7 +6,7 @@
 #include <vector>
 #include <vulkan/vulkan_beta.h>
 
-namespace engine
+namespace etna
 {
 
   struct SwapChainSupportDetails

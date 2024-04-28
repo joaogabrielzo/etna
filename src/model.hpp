@@ -7,7 +7,7 @@
 #include <glm/glm.hpp>
 #include <vector>
 
-namespace engine
+namespace etna
 {
     class Model
     {

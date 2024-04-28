@@ -5,24 +5,25 @@
 #include "device.hpp"
 #include "swapchain.hpp"
 #include "model.hpp"
+#include "model.hpp"
 
 #include <memory>
 #include <vector>
 
-namespace engine
+namespace etna
 {
-    class Engine
+    class Etna
     {
 
     public:
         static constexpr int WIDTH = 800;
         static constexpr int HEIGHT = 600;
 
-        Engine();
-        ~Engine();
+        Etna();
+        ~Etna();
 
-        Engine(const Engine &) = delete;
-        Engine &operator=(const Engine &) = delete;
+        Etna(const Etna &) = delete;
+        Etna &operator=(const Etna &) = delete;
 
         void run();
 
@@ -36,7 +37,7 @@ namespace engine
         void recreateSwapChain();
         void recordCommandBuffer(int imageIndex);
 
-        Window window{WIDTH, HEIGHT, "Engine"};
+        Window window{WIDTH, HEIGHT, "Etna"};
         Device device{window};
         std::unique_ptr<SwapChain> swapchain;
         std::unique_ptr<Pipeline> pipeline;

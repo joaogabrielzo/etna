@@ -5,7 +5,7 @@
 
 #include <string>
 
-namespace engine
+namespace etna
 {
     class Window
     {

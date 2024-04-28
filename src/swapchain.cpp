@@ -9,7 +9,7 @@
 #include <set>
 #include <stdexcept>
 
-namespace engine
+namespace etna
 {
 
   SwapChain::SwapChain(Device &deviceRef, VkExtent2D windowExtend)

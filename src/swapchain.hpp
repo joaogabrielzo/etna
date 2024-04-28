@@ -10,7 +10,7 @@
 #include <string>
 #include <vector>
 
-namespace engine
+namespace etna
 {
 
   class SwapChain

@@ -1,11 +1,11 @@
-#include "engine.hpp"
+#include "etna.hpp"
 
 #include <stdexcept>
 #include <memory>
 
-namespace engine
+namespace etna
 {
-    Engine::Engine()
+    Etna::Etna()
     {
         loadModels();
         createPipelineLayout();
@@ -13,12 +13,12 @@ namespace engine
         createCommandBuffers();
     }
 
-    Engine::~Engine()
+    Etna::~Etna()
     {
         vkDestroyPipelineLayout(device.device(), pipelineLayout, nullptr);
     }
 
-    void Engine::run()
+    void Etna::run()
     {
         while (!window.shouldClose())
         {
@@ -29,7 +29,7 @@ namespace engine
         vkDeviceWaitIdle(device.device());
     }
 
-    void Engine::loadModels()
+    void Etna::loadModels()
     {
         std::vector<Model::Vertex> vertices{
             {{0.0f, -0.5f}, {1.0f, 0.0f, 0.0f}},
@@ -40,7 +40,7 @@ namespace engine
         model = std::make_unique<Model>(device, vertices);
     }
 
-    void Engine::createPipelineLayout()
+    void Etna::createPipelineLayout()
     {
         VkPipelineLayoutCreateInfo pipelineLayoutInfo{};
         pipelineLayoutInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_LAYOUT_CREATE_INFO;
@@ -54,7 +54,7 @@ namespace engine
         }
     }
 
-    void Engine::createPipeline()
+    void Etna::createPipeline()
     {
         PipelineConfigInfo pipelineConfig{};
         Pipeline::defaultPipelineConfigInfo(pipelineConfig);
@@ -64,7 +64,7 @@ namespace engine
         pipeline = std::make_unique<Pipeline>(device, "../shaders/vert.spv", "../shaders/frag.spv", pipelineConfig);
     }
 
-    void Engine::createCommandBuffers()
+    void Etna::createCommandBuffers()
     {
         commandBuffers.resize(swapchain->imageCount());
 
@@ -80,13 +80,13 @@ namespace engine
         }
     }
 
-    void Engine::freeCommandBuffers()
+    void Etna::freeCommandBuffers()
     {
         vkFreeCommandBuffers(device.device(), device.getCommandPool(), static_cast<uint32_t>(commandBuffers.size()), commandBuffers.data());
         commandBuffers.clear();
     }
 
-    void Engine::drawFrame()
+    void Etna::drawFrame()
     {
         uint32_t imageIndex;
         auto result = swapchain->acquireNextImage(&imageIndex);
@@ -118,7 +118,7 @@ namespace engine
         }
     }
 
-    void Engine::recreateSwapChain()
+    void Etna::recreateSwapChain()
     {
         auto extent = window.getExtent();
         while (extent.width == 0 || extent.height == 0)
@@ -146,7 +146,7 @@ namespace engine
         createPipeline();
     }
 
-    void Engine::recordCommandBuffer(int imageIndex)
+    void Etna::recordCommandBuffer(int imageIndex)
     {
         for (int i = 0; i < commandBuffers.size(); i++)
         {
